@@ -13,8 +13,7 @@ function main(){
 
   for (const availableName of availableNames) {
     for (const availableFormat of availableFormats) {
-      let path = `${destination}/${availableName}/${availableFormat}/`
-      run(path , availableFormat , availableName)
+      run()
     }
   }
 
@@ -22,7 +21,7 @@ function main(){
 
 
 
-function run(iconDestination){
+function run(){
   let CMCresult = "";
   let cryptocurrencyDownload = [];
 
@@ -47,8 +46,9 @@ function run(iconDestination){
           cryptocurrencyDownload.push({
             url : `https://s2.coinmarketcap.com/static/img/coins/${format}/${CMCresult[i].id}.png`,
             format,
-            path : `${destination}/${format}/`,
-            id : CMCresult[i].id
+            path : `${destination}/${format}`,
+            id : CMCresult[i].id,
+            rank : i + 1
           });
         }
 
@@ -73,7 +73,7 @@ function run(iconDestination){
                 for (const name of availableNames) {
                   let path = ""
                   if (name === "rank"){
-                    path = `${cryptocurrencyDownload[i].path}/rank/${i + 1}.png`
+                    path = `${cryptocurrencyDownload[i].path}/rank/${cryptocurrencyDownload[i].rank}.png`
                   }else{
                     path = `${cryptocurrencyDownload[i].path}/${name}/${CMCresult[i][name]}.png`
                   }
