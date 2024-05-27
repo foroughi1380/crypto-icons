@@ -9,19 +9,8 @@ const availableNames = ["rank", "slug", "symbol"];
 
 
 
+
 function main(){
-
-  for (const availableName of availableNames) {
-    for (const availableFormat of availableFormats) {
-      run()
-    }
-  }
-
-}
-
-
-
-function run(){
   let CMCresult = "";
   let cryptocurrencyDownload = [];
 
@@ -111,11 +100,6 @@ function run(){
   }).on("error", (err) => {
     console.log(`Oops, an error occurred: ${err.message}`);
   });
-}
-
-
-function save(res , ){
-
 }
 
 main();
