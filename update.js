@@ -5,6 +5,7 @@ const https = require("https");
 
 const destination = `${__dirname}/icons`;
 const availableFormats = ["128x128", "64x64", "32x32", "16x16"];
+// const availableFormats = ["32x32"];
 const availableNames = ["rank", "slug", "symbol"];
 
 
@@ -58,6 +59,7 @@ function main(){
                 chunks += chunk;
               }).on("end", () => {
                 let streams = [];
+                let ok = 0;
 
                 for (const name of availableNames) {
                   let path = ""
@@ -79,7 +81,10 @@ function main(){
                   stream.write(chunks, "binary");
                   stream.on("finish", () => {
                     console.log(`Saved ${streams[streamsKey].path}`);
-                    resolve();
+                    ok++
+                    if (ok >= streams.length){
+                      resolve();
+                    }
                   });
                   response.pipe(stream);
                 }
@@ -91,6 +96,7 @@ function main(){
               reject(err.message);
             });
           });
+          console.log(i , "/" , cryptocurrencyDownload.length)
           if (i === cryptocurrencyDownload.length - 1) {
             console.log("Done!");
           }
