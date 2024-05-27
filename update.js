@@ -38,12 +38,15 @@ function main(){
             format,
             path : `${destination}/${format}`,
             id : CMCresult[i].id,
-            rank : i + 1
+            rank : i + 1,
+            i
           });
         }
 
       }
+
       (async function loop() {
+        let error = 0
         console.log("Started saving icons...");
         for (let i = 0; i < cryptocurrencyDownload.length; i++) {
           await new Promise((resolve, reject) => {
@@ -66,7 +69,7 @@ function main(){
                   if (name === "rank"){
                     path = `${cryptocurrencyDownload[i].path}/rank/${cryptocurrencyDownload[i].rank}.png`
                   }else{
-                    path = `${cryptocurrencyDownload[i].path}/${name}/${CMCresult[i][name]}.png`
+                    path = `${cryptocurrencyDownload[i].path}/${name}/${CMCresult[cryptocurrencyDownload[i].i][name]}.png`
                   }
 
                   streams.push({
@@ -92,11 +95,13 @@ function main(){
 
               });
             }).on("error", (err) => {
+              error++
               console.log(`Oops, an error occurred: ${err.message}`);
               reject(err.message);
             });
           });
-          console.log(i , "/" , cryptocurrencyDownload.length)
+          console.log(i , "-" , error , "/" , cryptocurrencyDownload.length)
+
           if (i === cryptocurrencyDownload.length - 1) {
             console.log("Done!");
           }
